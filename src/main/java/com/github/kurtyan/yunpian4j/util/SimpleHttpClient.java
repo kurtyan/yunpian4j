@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.Scanner;
 
 /**
- * A simple http client in pure java, based on java.net.URLConnection.
+ * A simple http client written in pure java, based on java.net.URLConnection.
  * At this time, http methods other than 'POST with urlencoded form' are not implemented because they are not necessary in this project.
  *
  * Created by kurtyan on 16-2-26.
