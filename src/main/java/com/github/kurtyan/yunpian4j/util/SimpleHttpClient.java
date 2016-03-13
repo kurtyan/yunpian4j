@@ -16,12 +16,21 @@ import java.util.Scanner;
  */
 public class SimpleHttpClient {
 
+    private String charset;
+
+    public SimpleHttpClient() {
+        this("utf-8");
+    }
+
+    public SimpleHttpClient(String charset) {
+        this.charset = charset;
+    }
+
     public String post(String url, Map<String, String> form) throws IOException {
         if (url == null) {
             throw new IllegalArgumentException("url must not be null");
         }
 
-        String charset = "utf-8";
         String queryString = this.buildQueryString(form);
 
         URLConnection conn = new URL(url).openConnection();
