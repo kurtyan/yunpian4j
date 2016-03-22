@@ -10,6 +10,10 @@ public class YunpianClient {
 
     private YunpianConfig yunpianConfig;
 
+    public YunpianClient(YunpianConfig config) {
+        this.yunpianConfig = config;
+    }
+
     public SendMethod createSendMethod() {
         return new SendMethod(yunpianConfig);
     }

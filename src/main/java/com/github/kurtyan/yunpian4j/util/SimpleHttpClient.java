@@ -27,6 +27,15 @@ public class SimpleHttpClient {
     }
 
     public String post(String url, Map<String, String> form) throws IOException {
+        return this.post(url, form, new InputStreamParser<String>() {
+            @Override
+            public String parse(InputStream is) {
+                return SimpleHttpClient.this.readFromStream(is, charset);
+            }
+        });
+    }
+
+    public <T> T post(String url, Map<String, String> form, InputStreamParser<T> responseParser) throws IOException {
         if (url == null) {
             throw new IllegalArgumentException("url must not be null");
         }
@@ -43,7 +52,24 @@ public class SimpleHttpClient {
         os.flush();
         os.close();
 
-        return this.readFromStream(conn.getInputStream(), charset);
+        return this.parseResponse(conn, responseParser);
+    }
+
+    private <T> T parseResponse(URLConnection conn, InputStreamParser<T> parser) throws IOException {
+        InputStream is = null;
+
+        try {
+            is = conn.getInputStream();
+            return parser.parse(is);
+        } finally {
+            if (is != null) {
+                // JDK6 sucks T_T
+                try {
+                    is.close();
+                } catch (Exception e) {
+                }
+            }
+        }
     }
 
     private String buildQueryString(Map<String, String> form) {
@@ -70,6 +96,10 @@ public class SimpleHttpClient {
     private String readFromStream(InputStream is, String charset) {
         Scanner sc = new Scanner(is, charset).useDelimiter("\\A");
         return sc.hasNext() ? sc.next() : null;
+    }
+
+    public static interface InputStreamParser<T> {
+        public T parse(InputStream is);
     }
 
 }

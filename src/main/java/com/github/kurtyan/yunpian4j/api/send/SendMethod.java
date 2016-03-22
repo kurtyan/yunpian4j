@@ -1,5 +1,6 @@
 package com.github.kurtyan.yunpian4j.api.send;
 
+import com.github.kurtyan.yunpian4j.api.ResponseParserFactory;
 import com.github.kurtyan.yunpian4j.client.YunpianConfig;
 import com.github.kurtyan.yunpian4j.exception.IllegalApiArgumentException;
 import com.github.kurtyan.yunpian4j.exception.YunpianException;
@@ -14,12 +15,7 @@ import java.util.*;
 public class SendMethod {
 
     private final static String s_sendMethodUrl = "https://sms.yunpian.com/v1/sms/send.json";
-    private final static Requester.ResponseParser<SendMethodResponse> s_responseParser = new Requester.ResponseParser<SendMethodResponse>() {
-        @Override
-        public SendMethodResponse parse(String response) throws YunpianException {
-            return null;
-        }
-    };
+    private final static Requester.ResponseParser<SendMethodResponse> s_responseParser = ResponseParserFactory.getInstance().getParser(SendMethodResponse.class);
 
     private YunpianConfig yunpianConfig;
     private String text;
@@ -36,11 +32,6 @@ public class SendMethod {
 
     public SendMethod appendTarget(String... target) {
         this.targetPhoneList.addAll(Arrays.asList(target));
-        return this;
-    }
-
-    public SendMethod clearTarget() {
-        this.targetPhoneList.clear();
         return this;
     }
 
