@@ -12,7 +12,7 @@ import java.util.*;
 /**
  * Created by kurtyan on 16-3-1.
  */
-public class SendMethod {
+public class SendMethod implements Sendable {
 
     private final static String s_sendMethodUrl = "https://sms.yunpian.com/v1/sms/send.json";
     private final static Requester.ResponseParser<SendMethodResponse> s_responseParser = ResponseParserFactory.getInstance().getParser(SendMethodResponse.class);
@@ -23,6 +23,10 @@ public class SendMethod {
 
     public SendMethod(YunpianConfig yunpianConfig) {
         this.yunpianConfig = yunpianConfig;
+    }
+
+    private TemplatedSendMethod withTemplate(String templateId) {
+        return new TemplatedSendMethod(yunpianConfig, this, templateId);
     }
 
     public SendMethod withText(String text) {

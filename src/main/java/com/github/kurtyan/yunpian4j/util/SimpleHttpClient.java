@@ -79,18 +79,14 @@ public class SimpleHttpClient {
 
         StringBuilder queryBuilder = new StringBuilder();
 
-        int i = 0;
         for (Map.Entry<String, String> entry : form.entrySet()) {
-            if (i != 0) {
-                queryBuilder.append("&");
-            }
-            i++;
-            queryBuilder.append(entry.getKey())
+            queryBuilder.append("&")
+                    .append(entry.getKey())
                     .append("=")
                     .append(entry.getValue());
         }
 
-        return queryBuilder.toString();
+        return queryBuilder.substring(1);
     }
 
     private String readFromStream(InputStream is, String charset) {
