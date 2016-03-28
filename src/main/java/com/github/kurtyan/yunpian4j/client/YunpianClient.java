@@ -19,7 +19,7 @@ public class YunpianClient {
     }
 
     public CallMethod createCallMethod() {
-        return new CallMethod(yunpianConfig.getApiKey());
+        return new CallMethod(yunpianConfig);
     }
 
 }

@@ -20,8 +20,4 @@ public class IllegalApiArgumentException extends YunpianException {
         super(cause);
     }
 
-    public IllegalApiArgumentException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
-        super(message, cause, enableSuppression, writableStackTrace);
-    }
-
 }

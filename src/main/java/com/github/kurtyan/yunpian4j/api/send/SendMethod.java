@@ -39,7 +39,7 @@ public class SendMethod implements Sendable {
         return this;
     }
 
-    private Map<String, String> validateThenGetParam() throws IllegalApiArgumentException {
+    private Map<String, String> validateAndGetParam() throws IllegalApiArgumentException {
         if (text == null || text.length() == 0) {
             throw new IllegalApiArgumentException("text must not be null");
         }
@@ -57,7 +57,7 @@ public class SendMethod implements Sendable {
     }
 
     public SendMethodResponse execute() throws YunpianException {
-        Map<String, String> param = this.validateThenGetParam();
+        Map<String, String> param = this.validateAndGetParam();
         return Requester.post(
                 s_sendMethodUrl,
                 param,
